@@ -11,8 +11,6 @@ scale = 1.0
 
 # goldenRatio = 1.61803398875
 
-# Usage: Cycle through colors
-# color = hue_to_rgb(0.5) # Returns Cyan (0, 255, 255)
 # cX is real part of complex number
 # cY is imaginary part
 # set up global variables once before running generateJuliaBitmap()
@@ -61,17 +59,17 @@ def _julia_kernel(w, h, zoom, moveX, moveY, cX, cY, maxIter):
 
 @njit
 def hue_to_rgb(t):
-	"""
-	Interpolates through the hue spectrum using a single variable t (0.0 to 1.0).
-	Returns (R, G, B) tuple with values 0-255.
-	"""
-	h = t * 6.0
+	# interpolates between RBG colors using t as a hue
+	# t (0,1)
+	h = t * 6.0 # *6 to see which sextant of the color wheel to use
 	i = int(h)
 	f = h - i
 
+	# constant value and saturation
 	v = 200.0 / 255.0
 	s = 200.0 / 255.0
 
+	# hsv to rgb formula
 	p = v * (1.0 - s)
 	q = v * (1.0 - s * f)
 	t_val = v * (1.0 - s * (1.0 - f))

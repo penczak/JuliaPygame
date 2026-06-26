@@ -8,7 +8,8 @@ pygame.display.set_caption("Julia Fractal Exploration")
 SCREEN_W, SCREEN_H = 1080, 720
 screen = pygame.display.set_mode((SCREEN_W, SCREEN_H))
 
-cX, cY = 0.26, 0.0016
+# cX, cY = 0.26, 0.0016
+cX, cY = -0.8, 0.156
 scale = 0.5
 
 Julia2.init(pcX=cX, pcY=cY, pscale=scale, maxW=SCREEN_W, maxH=SCREEN_H)
@@ -29,6 +30,10 @@ def increaseZoom(zoom, zoomOut=False):
 	scale = 1.05
 	# scale = math.e
 	return zoom / scale if zoomOut else zoom * scale
+
+def updateParameters(dcx, dcy):
+	stepSize = 0.000001
+	Julia2.updateParameters(dcx * stepSize, dcy * stepSize)
 
 def translate(moveX, moveY, direction):
 	stepSize = 1.0 / (12.0 * zoom)
@@ -83,6 +88,22 @@ while running:
 
 	if keys[pygame.K_DOWN]:
 		moveX, moveY = translate(moveX, moveY, "DOWN")
+		changed = True
+
+	if keys[pygame.K_d]:
+		updateParameters(1, 0)
+		changed = True
+
+	if keys[pygame.K_a]:
+		updateParameters(-1, 0)
+		changed = True
+
+	if keys[pygame.K_w]:
+		updateParameters(0, 1)
+		changed = True
+
+	if keys[pygame.K_s]:
+		updateParameters(0, -1)
 		changed = True
 
 	if changed:

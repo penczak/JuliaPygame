@@ -21,6 +21,11 @@ def init(pcX=-0.8, pcY=0.156, pscale = 0.2, pmaxIter = 255, maxW = 1080, maxH = 
 	cX, cY = pcX, pcY
 	maxIter = pmaxIter
 
+def updateParameters(dcX, dcY):
+    global cX, cY
+    cX += dcX
+    cY += dcY
+
 @njit(parallel=True, fastmath=True)
 def _julia_kernel(w, h, zoom, moveX, moveY, cX, cY, maxIter):
 	out = np.zeros((h, w, 3), dtype=np.uint8)

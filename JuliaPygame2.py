@@ -32,7 +32,7 @@ def increaseZoom(zoom, zoomOut=False):
 	return zoom / scale if zoomOut else zoom * scale
 
 def updateParameters(dcx, dcy):
-	stepSize = 0.000001
+	stepSize = 1.0 / (1200.0 * zoom)
 	Julia2.updateParameters(dcx * stepSize, dcy * stepSize)
 
 def translate(moveX, moveY, direction):
